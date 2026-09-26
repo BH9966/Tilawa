@@ -1,0 +1,107 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Amiri:wght@400;700&display=swap');
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+    --font-sans: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-arabic: 'Amiri', 'Noto Naskh Arabic', serif;
+
+    --color-tilawa-teal: #2dafbd;
+    --color-tilawa-teal-dark: #188691;
+    --color-tilawa-teal-light: #8fe0e8;
+    --color-tilawa-mint: #8fe9c9;
+    --color-tilawa-purple: #5b3fbf;
+    --color-tilawa-amber: #f7de9a;
+    --color-tilawa-ink: #12313a;
+    --color-tilawa-sub: #5c7a80;
+    --color-tilawa-line: #e3eeef;
+    --color-tilawa-paper: #fbf6e9;
+    --color-tilawa-gold: #b8892f;
+
+    /* Card / control surface. Distinct from the page background so cards
+       stay visible in Night Mode; plain white in Light Mode. */
+    --color-tilawa-surface: #ffffff;
+}
+
+/* ---------------------------------------------------------------------
+   Night Mode
+   A dark, eye-friendly background (not pure black) with warm/off-white
+   Arabic text and softened supporting text. Redefining these tokens here
+   means every existing utility class built on them (bg-tilawa-*,
+   text-tilawa-*, border-tilawa-*) adapts automatically — no per-component
+   rewrite needed for the reading layout itself.
+   ------------------------------------------------------------------- */
+:root.dark {
+    --color-tilawa-ink: #f3ead9;       /* warm off-white Arabic/body text, not bright white */
+    --color-tilawa-sub: #a9b9bc;       /* muted transliteration/translation text */
+    --color-tilawa-line: #2a3a3d;      /* borders/dividers */
+    --color-tilawa-paper: #16232a;     /* subtle warm-dark panel tint */
+    --color-tilawa-surface: #1c2b30;   /* card surface, lighter than page bg */
+    --color-tilawa-gold: #d9ab5a;
+}
+
+.font-arabic {
+    direction: rtl;
+}
+
+[x-cloak] {
+    display: none !important;
+}
+
+/* Smooth theme transition */
+body,
+.tilawa-surface-transition,
+[class*='bg-tilawa-'],
+[class*='text-tilawa-'],
+[class*='border-tilawa-'] {
+    transition:
+        background-color 300ms ease,
+        border-color 300ms ease,
+        color 300ms ease;
+}
+
+/* ---------------------------------------------------------------------
+   Tajweed rule colors — class-based (not inline styles) so they can
+   respond to Night Mode. Each group gets a light and dark variant tuned
+   for contrast against its respective background.
+   ------------------------------------------------------------------- */
+.tajweed-mark {
+    cursor: pointer;
+    text-decoration: underline;
+    text-decoration-style: dotted;
+    text-underline-offset: 4px;
+}
+
+.tajweed-group-madd { color: #c2410c; }
+.tajweed-group-ghunnah { color: #15803d; }
+.tajweed-group-idgham { color: #1d4ed8; }
+.tajweed-group-qalqalah { color: #b91c1c; }
+.tajweed-group-iqlab { color: #7e22ce; }
+.tajweed-group-silent { color: #6b7280; }
+
+html.dark .tajweed-group-madd { color: #fb923c; }
+html.dark .tajweed-group-ghunnah { color: #4ade80; }
+html.dark .tajweed-group-idgham { color: #60a5fa; }
+html.dark .tajweed-group-qalqalah { color: #f87171; }
+html.dark .tajweed-group-iqlab { color: #c084fc; }
+html.dark .tajweed-group-silent { color: #9ca3af; }
+
+/* Word-by-word tap target */
+.word-token {
+    border-radius: 0.375rem;
+    cursor: pointer;
+    transition: background-color 150ms ease;
+}
+.word-token:hover {
+    background-color: color-mix(in srgb, var(--color-tilawa-teal) 12%, transparent);
+}
+.word-token.word-token-selected {
+    background-color: color-mix(in srgb, var(--color-tilawa-teal) 22%, transparent);
+}
